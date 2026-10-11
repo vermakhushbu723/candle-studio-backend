@@ -36,24 +36,37 @@ export async function sendPush(tokens: string[], msg: PushMessage) {
   const link = absolute(msg.link);
   const dead: string[] = [];
 
+  const payload = {
+    notification: { title: msg.title, body: msg.body, ...(msg.image ? { imageUrl: absolute(msg.image) } : {}) },
+    data: { link },
+    webpush: {
+      fcmOptions: { link },
+      notification: { icon: `${env.siteUrl}/logo-mark.png`, badge: `${env.siteUrl}/logo-mark.png` },
+    },
+  };
+  const isDead = (code: string) => code.includes('registration-token-not-registered') || code.includes('invalid-registration-token') || code.includes('invalid-argument');
+  const errors: Record<string, number> = {};
+
   for (let i = 0; i < tokens.length; i += 500) {
-    const batch = tokens.slice(i, i + 500);
-    const res = await getMessaging().sendEachForMulticast({
-      tokens: batch,
-      notification: { title: msg.title, body: msg.body, ...(msg.image ? { imageUrl: absolute(msg.image) } : {}) },
-      data: { link },
-      webpush: {
-        fcmOptions: { link },
-        notification: { icon: `${env.siteUrl}/logo-mark.png`, badge: `${env.siteUrl}/logo-mark.png` },
-      },
-    });
-    result.sent += res.successCount;
-    result.failed += res.failureCount;
-    res.responses.forEach((r, k) => {
-      const code = r.error?.code ?? '';
-      if (code.includes('registration-token-not-registered') || code.includes('invalid-registration-token') || code.includes('invalid-argument')) dead.push(batch[k]);
-    });
+    let batch = tokens.slice(i, i + 500);
+    // One retry for temporary FCM errors (e.g. a token created seconds ago, or a brief outage)
+    for (let attempt = 0; attempt < 2 && batch.length; attempt++) {
+      if (attempt) await new Promise((r) => setTimeout(r, 1500));
+      const res = await getMessaging().sendEachForMulticast({ tokens: batch, ...payload });
+      result.sent += res.successCount;
+      const retry: string[] = [];
+      res.responses.forEach((r, k) => {
+        if (r.success) return;
+        const code = r.error?.code ?? 'unknown';
+        if (isDead(code)) dead.push(batch[k]);
+        else if (attempt === 0) return void retry.push(batch[k]);
+        result.failed++;
+        errors[code] = (errors[code] ?? 0) + 1;
+      });
+      batch = retry;
+    }
   }
+  if (Object.keys(errors).length) console.warn('[push] failures:', errors);
   if (dead.length) await User.updateMany({ 'pushTokens.token': { $in: dead } }, { $pull: { pushTokens: { token: { $in: dead } } } });
   return result;
 }
