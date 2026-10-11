@@ -15,6 +15,7 @@ const publicUser = (u: UserDoc) => ({
   name: u.name,
   email: u.email ?? '',
   phone: u.phone ?? '',
+  avatar: u.avatar ?? '',
   role: u.role,
   createdAt: (u as unknown as { createdAt: Date }).createdAt,
 });
@@ -86,7 +87,7 @@ export async function verifyOtp(req: Request, res: Response) {
 export async function googleLogin(req: Request, res: Response) {
   if (!env.googleClientId) throw new ApiError(503, 'Google sign-in is not configured yet.');
   const r = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(req.body.credential)}`);
-  const info = (await r.json().catch(() => ({}))) as { aud?: string; sub?: string; email?: string; email_verified?: string | boolean; name?: string };
+  const info = (await r.json().catch(() => ({}))) as { aud?: string; sub?: string; email?: string; email_verified?: string | boolean; name?: string; picture?: string };
   if (!r.ok || info.aud !== env.googleClientId || !info.sub) throw new ApiError(401, 'Google sign-in failed. Please try again.');
   if (!info.email || String(info.email_verified) !== 'true') throw new ApiError(401, 'Your Google email is not verified.');
 
@@ -94,11 +95,12 @@ export async function googleLogin(req: Request, res: Response) {
   let user = (await User.findOne({ $or: [{ googleId: info.sub }, { email }] })) as UserDoc | null;
   if (user && user.role !== 'customer') throw new ApiError(403, 'Please use the admin panel to sign in.');
   if (!user) {
-    user = (await User.create({ name: info.name || email.split('@')[0], email, googleId: info.sub, loginMethod: 'google' })) as UserDoc;
+    user = (await User.create({ name: info.name || email.split('@')[0], email, googleId: info.sub, loginMethod: 'google', avatar: info.picture ?? '' })) as UserDoc;
     return signIn(res, user, 201);
   }
   if (!user.googleId) user.googleId = info.sub;
   user.loginMethod = 'google';
+  if (info.picture) user.avatar = info.picture; // keep the photo fresh
   await signIn(res, user);
 }
 

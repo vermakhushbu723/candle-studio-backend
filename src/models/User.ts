@@ -12,6 +12,7 @@ const userSchema = new Schema(
     role: { type: String, enum: ['customer', 'admin'], default: 'customer' },
     isBlocked: { type: Boolean, default: false },
     lastLoginAt: Date,
+    avatar: { type: String, default: '' }, // Google profile photo (phone users get initials on the site)
     loginMethod: { type: String, enum: ['phone', 'google', 'password'], default: undefined },
     // Firebase Cloud Messaging tokens (one per browser/device the customer allowed notifications on)
     pushTokens: {
