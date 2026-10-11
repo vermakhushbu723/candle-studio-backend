@@ -105,7 +105,7 @@ export async function listCustomers(req: Request, res: Response) {
     const rx = new RegExp(escapeRegex(String(req.query.q)), 'i');
     filter.$or = [{ name: rx }, { email: rx }, { phone: rx }];
   }
-  const [users, total] = await Promise.all([User.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(), User.countDocuments(filter)]);
+  const [users, total] = await Promise.all([User.find(filter).select('+pushTokens').sort({ createdAt: -1 }).skip(skip).limit(limit).lean(), User.countDocuments(filter)]);
 
   // An order belongs to a customer by account, email or phone (guest checkouts before signing up)
   const orders = await Order.find({ $or: [{ user: { $in: users.map((u) => u._id) } }, { 'customer.email': { $in: users.map((u) => u.email).filter(Boolean) } }, { 'customer.phone': { $in: users.map((u) => u.phone).filter(Boolean) } }] })
@@ -113,8 +113,10 @@ export async function listCustomers(req: Request, res: Response) {
     .lean();
   const items = users.map((u) => {
     const mine = orders.filter((o) => String(o.user) === String(u._id) || (u.email && o.customer?.email === u.email) || (u.phone && o.customer?.phone === u.phone));
+    const { pushTokens, ...rest } = u;
     return {
-      ...u,
+      ...rest,
+      pushDevices: pushTokens?.length ?? 0,
       orders: mine.length,
       spent: mine.filter((o) => !['Cancelled', 'Payment Pending'].includes(o.status)).reduce((t, o) => t + o.total, 0),
       lastOrder: mine.reduce<Date | undefined>((d, o) => (!d || o.createdAt > d ? o.createdAt : d), undefined),
@@ -124,16 +126,28 @@ export async function listCustomers(req: Request, res: Response) {
 }
 
 export async function getCustomer(req: Request, res: Response) {
-  const user = await User.findById(req.params.id).lean();
-  if (!user || user.role !== 'customer') throw new ApiError(404, 'Customer not found.');
+  const found = await User.findById(req.params.id).select('+pushTokens').lean();
+  if (!found || found.role !== 'customer') throw new ApiError(404, 'Customer not found.');
+  const { pushTokens, ...user } = found;
   const match: Record<string, unknown>[] = [{ user: user._id }];
   if (user.email) match.push({ 'customer.email': user.email });
   if (user.phone) match.push({ 'customer.phone': user.phone });
   const orders = await Order.find({ $or: match }).sort({ createdAt: -1 });
   const spent = orders.filter((o) => !['Cancelled', 'Payment Pending'].includes(o.status)).reduce((s, o) => s + o.total, 0);
+  // Delivery addresses the customer has used (newest first, de-duplicated)
+  const seen = new Set<string>();
+  const addresses = orders
+    .map((o) => ({ ...o.address, name: o.customer?.name, phone: o.customer?.phone, email: o.customer?.email, usedAt: (o as unknown as { createdAt: Date }).createdAt }))
+    .filter((a) => { const k = `${a.line1}|${a.pincode}`.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; });
   res.json({
     success: true,
-    customer: user,
+    customer: {
+      ...user,
+      googleLinked: Boolean(user.googleId),
+      notifyOffers: user.notifyOffers !== false,
+      pushDevices: (pushTokens ?? []).map((t) => ({ device: t.device, addedAt: t.addedAt })),
+    },
+    addresses,
     stats: { orders: orders.length, spent, lastOrder: orders[0] ? (orders[0] as unknown as { createdAt: Date }).createdAt : null },
     orders: orders.map((o) => ({ id: o.orderId, total: o.total, status: o.status, date: (o as unknown as { createdAt: Date }).createdAt, items: o.items.length })),
   });

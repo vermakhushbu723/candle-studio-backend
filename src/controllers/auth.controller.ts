@@ -74,10 +74,11 @@ export async function verifyOtp(req: Request, res: Response) {
   if (!user) {
     if (!name) throw new ApiError(400, 'name: Please tell us your name');
     if (email && (await User.exists({ email }))) throw new ApiError(409, 'That email is already linked to another account.');
-    user = (await User.create({ name, phone, email: email || undefined })) as UserDoc;
+    user = (await User.create({ name, phone, email: email || undefined, loginMethod: 'phone' })) as UserDoc;
     created = true;
   }
   await record.deleteOne();
+  if (!created) user.loginMethod = 'phone';
   await signIn(res, user, created ? 201 : 200);
 }
 
@@ -93,10 +94,11 @@ export async function googleLogin(req: Request, res: Response) {
   let user = (await User.findOne({ $or: [{ googleId: info.sub }, { email }] })) as UserDoc | null;
   if (user && user.role !== 'customer') throw new ApiError(403, 'Please use the admin panel to sign in.');
   if (!user) {
-    user = (await User.create({ name: info.name || email.split('@')[0], email, googleId: info.sub })) as UserDoc;
+    user = (await User.create({ name: info.name || email.split('@')[0], email, googleId: info.sub, loginMethod: 'google' })) as UserDoc;
     return signIn(res, user, 201);
   }
   if (!user.googleId) user.googleId = info.sub;
+  user.loginMethod = 'google';
   await signIn(res, user);
 }
 

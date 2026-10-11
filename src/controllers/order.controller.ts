@@ -4,6 +4,7 @@ import { Order } from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import { User } from '../models/User.js';
 import { getShippingSettings, shippingFor } from '../models/Setting.js';
+import { notifyOrder, type OrderEvent } from '../services/notify.js';
 import { ApiError, escapeRegex, paginate } from '../utils/http.js';
 import { evaluateCoupon } from './coupon.controller.js';
 import { env } from '../config/env.js';
@@ -92,6 +93,7 @@ export async function createOrder(req: Request, res: Response) {
 
   if (!online) {
     await commitStock(order);
+    void notifyOrder(order, 'placed');
     return res.status(201).json({ success: true, order: toClientOrder(order) });
   }
 
@@ -150,6 +152,7 @@ export async function verifyPayment(req: Request, res: Response) {
 /** Confirms an online order once Razorpay says it is paid (checkout handler or webhook — whichever comes first). */
 export async function markPaid(order: OrderDoc, paymentId: string, via = 'checkout') {
   if (order.paymentStatus === 'Paid') return;
+  const wasPending = order.status === 'Payment Pending';
   order.paymentStatus = 'Paid';
   order.razorpayPaymentId = paymentId;
   order.paidAt = new Date();
@@ -159,6 +162,7 @@ export async function markPaid(order: OrderDoc, paymentId: string, via = 'checko
   }
   await order.save();
   await commitStock(order);
+  if (wasPending) void notifyOrder(order, 'paid');
 }
 
 /** Lets the website reopen Razorpay Checkout for an order whose payment was not completed. */
@@ -214,6 +218,7 @@ export async function updateStatus(req: Request, res: Response) {
   const order = (await Order.findOne({ orderId: req.params.orderId })) as OrderDoc | null;
   if (!order) throw new ApiError(404, 'Order not found.');
   const { status, note, awb, courier, paymentStatus } = req.body;
+  const previous = order.status;
   if (status !== order.status) order.statusHistory.push({ status, at: new Date(), note });
   // Put stock back when an order is cancelled (and take it again if it is revived)
   if (status !== order.status && order.stockCommitted && (status === 'Cancelled' || order.status === 'Cancelled')) {
@@ -228,5 +233,10 @@ export async function updateStatus(req: Request, res: Response) {
   await order.save();
   // Admin confirmed an online order by hand (e.g. payment checked in the Razorpay dashboard)
   if (!['Cancelled', 'Payment Pending'].includes(status)) await commitStock(order);
+  // Tell the customer about every real status change
+  if (status !== previous) {
+    const event: OrderEvent | null = status === 'Order Placed' ? (previous === 'Payment Pending' ? 'placed' : null) : status === 'Payment Pending' ? null : (status as OrderEvent);
+    if (event) void notifyOrder(order, event);
+  }
   res.json({ success: true, order: toClientOrder(order) });
 }

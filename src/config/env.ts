@@ -23,4 +23,19 @@ export const env = {
   otpDevMode: (process.env.OTP_DEV_MODE ?? 'true') === 'true',
   // Google sign-in — the OAuth Web client ID from Google Cloud Console
   googleClientId: process.env.GOOGLE_CLIENT_ID ?? '',
+  // Public site URL used in links inside notifications and emails
+  siteUrl: process.env.SITE_URL ?? 'https://jyotessa.com',
+  // Firebase Cloud Messaging (push). Service-account JSON, base64-encoded. Push is disabled until set.
+  firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT_BASE64 ?? '',
+  // Email (SMTP). Email is disabled until SMTP_HOST is set.
+  smtp: {
+    host: process.env.SMTP_HOST ?? '',
+    port: Number(process.env.SMTP_PORT ?? 587),
+    secure: (process.env.SMTP_SECURE ?? 'false') === 'true',
+    user: process.env.SMTP_USER ?? '',
+    pass: process.env.SMTP_PASS ?? '',
+  },
+  mailFrom: process.env.MAIL_FROM ?? 'Jyotessa <no-reply@jyotessa.com>',
+  // Where "new order" alerts for the team are emailed (optional)
+  adminNotifyEmail: process.env.ADMIN_NOTIFY_EMAIL ?? '',
 };

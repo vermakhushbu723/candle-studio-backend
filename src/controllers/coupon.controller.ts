@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { Coupon } from '../models/Engagement.js';
+import { broadcast } from '../services/notify.js';
 import { ApiError } from '../utils/http.js';
 
 type CouponDoc = InstanceType<typeof Coupon>;
@@ -34,7 +35,17 @@ export async function listAll(_req: Request, res: Response) {
   res.json({ success: true, items: await Coupon.find().sort({ createdAt: -1 }) });
 }
 export async function create(req: Request, res: Response) {
-  res.status(201).json({ success: true, coupon: await Coupon.create(req.body) });
+  const { notify, ...data } = req.body;
+  const coupon = await Coupon.create(data);
+  if (notify && coupon.isActive) {
+    const off = coupon.type === 'percent' ? `${coupon.value}% off` : `₹${coupon.value} off`;
+    void broadcast({
+      title: `${off} with code ${coupon.code} 🎁`,
+      body: coupon.description || `Use ${coupon.code} at checkout${coupon.minOrder ? ` on orders above ₹${coupon.minOrder}` : ''}. Valid till ${coupon.expiry.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}.`,
+      link: '/shop', channels: ['push', 'email'], trigger: 'new-offer', createdBy: req.user?.name,
+    });
+  }
+  res.status(201).json({ success: true, coupon });
 }
 export async function update(req: Request, res: Response) {
   const coupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });

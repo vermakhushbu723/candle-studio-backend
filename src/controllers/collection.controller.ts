@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { Collection } from '../models/Collection.js';
 import { Product } from '../models/Product.js';
+import { broadcast } from '../services/notify.js';
 import { ApiError } from '../utils/http.js';
 
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -37,7 +38,11 @@ export async function getOne(req: Request, res: Response) {
 export async function create(req: Request, res: Response) {
   const slug = req.body.slug || slugify(req.body.name);
   if (await Collection.exists({ slug })) throw new ApiError(409, `A collection with the URL “${slug}” already exists.`);
-  const collection = await Collection.create({ ...req.body, slug });
+  const { notify, productIds: _ids, ...data } = req.body;
+  const collection = await Collection.create({ ...data, slug });
+  if (notify && collection.isActive) {
+    void broadcast({ title: `New collection: ${collection.name} 🕯️`, body: collection.description || 'Fresh candles just dropped — take a look.', link: `/shop?category=${slug}`, image: collection.image, channels: ['push', 'email'], trigger: 'new-collection', createdBy: req.user?.name });
+  }
   if (req.body.productIds?.length) await Product.updateMany({ slug: { $in: req.body.productIds } }, { $addToSet: { collections: slug } });
   res.status(201).json({ success: true, collection });
 }

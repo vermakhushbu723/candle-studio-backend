@@ -12,6 +12,15 @@ const userSchema = new Schema(
     role: { type: String, enum: ['customer', 'admin'], default: 'customer' },
     isBlocked: { type: Boolean, default: false },
     lastLoginAt: Date,
+    loginMethod: { type: String, enum: ['phone', 'google', 'password'], default: undefined },
+    // Firebase Cloud Messaging tokens (one per browser/device the customer allowed notifications on)
+    pushTokens: {
+      type: [{ token: { type: String, required: true }, device: String, addedAt: { type: Date, default: Date.now } }],
+      default: [],
+      select: false,
+    },
+    // Marketing (new products, offers) — order updates are always sent
+    notifyOffers: { type: Boolean, default: true },
   },
   { timestamps: true },
 );

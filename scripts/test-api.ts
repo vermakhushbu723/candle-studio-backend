@@ -9,6 +9,7 @@ import { createHmac } from 'node:crypto';
 import { connectDB, disconnectDB } from '../src/config/db.js';
 import { Order } from '../src/models/Order.js';
 import { User } from '../src/models/User.js';
+import { Notification } from '../src/models/Notification.js';
 
 const BASE = process.env.API_URL ?? `http://localhost:${process.env.PORT ?? 5050}/api`;
 let passed = 0;
@@ -143,17 +144,24 @@ async function main() {
     const o = r.json.order;
     const sub = product.price * 2;
     const disc = Math.round(sub * 0.1);
-    const ship = sub - disc >= 899 ? 0 : 79;
+    // Shipping follows the admin's live settings (Settings → Shipping charges)
+    const sh = (await call('GET', '/settings')).json.shipping;
+    const after = sub - disc;
+    const ship = sh.shippingFee === 0 || (sh.freeShippingEnabled && after >= sh.freeShippingAbove) ? 0 : sh.shippingFee;
     expect(o.subtotal === sub && o.discount === disc && o.total === sub - disc + ship, `got ${o.subtotal}/${o.discount}/${o.total}`);
     expect(/^CD\d{6}$/.test(o.id), `order id ${o.id}`);
     orderId = o.id;
   });
+  await check('POST /orders without login → 401 (checkout asks to log in)', async () => {
+    const r = await call('POST', '/orders', orderBody());
+    expect(r.status === 401, `status ${r.status}`);
+  });
   await check('POST /orders (bad pincode → 400)', async () => {
-    const r = await call('POST', '/orders', { ...orderBody(), pincode: '12' });
+    const r = await call('POST', '/orders', { ...orderBody(), pincode: '12' }, token);
     expect(r.status === 400, `status ${r.status}`);
   });
   await check('POST /orders (unknown product → 400)', async () => {
-    const r = await call('POST', '/orders', { ...orderBody(), items: [{ productId: 'ghost', quantity: 1 }] });
+    const r = await call('POST', '/orders', { ...orderBody(), items: [{ productId: 'ghost', quantity: 1 }] }, token);
     expect(r.status === 400, `status ${r.status}`);
   });
   await check('stock decremented', async () => {
@@ -245,6 +253,24 @@ async function main() {
   await check('GET /orders/mine', async () => {
     const r = await call('GET', '/orders/mine', undefined, token);
     expect(r.status === 200 && r.json.orders.some((o: { id: string }) => o.id === orderId), `status ${r.status}`);
+  });
+
+  console.log('\nNotifications (customer)');
+  await check('POST /notifications/devices (register browser for push)', async () => {
+    const r = await call('POST', '/notifications/devices', { token: `test-fcm-token-${stamp}-abcdefghijklmnop`, device: 'API test' }, token);
+    expect(r.status === 200, `status ${r.status} ${r.json.message}`);
+  });
+  await check('GET /notifications/preferences', async () => {
+    const r = await call('GET', '/notifications/preferences', undefined, token);
+    expect(r.status === 200 && r.json.devices === 1 && r.json.notifyOffers === true, JSON.stringify(r.json));
+  });
+  await check('PUT /notifications/preferences (opt out of offers)', async () => {
+    const r = await call('PUT', '/notifications/preferences', { notifyOffers: false }, token);
+    expect(r.status === 200 && r.json.notifyOffers === false, `status ${r.status}`);
+  });
+  await check('notification routes need login → 401', async () => {
+    const r = await call('POST', '/notifications/devices', { token: 'x'.repeat(30) });
+    expect(r.status === 401, `status ${r.status}`);
   });
 
   console.log('\nForm: Track Order');
@@ -383,6 +409,24 @@ async function main() {
     const r = await call('GET', `/admin/customers/${created.customer}`, undefined, adminToken);
     expect(r.status === 200 && r.json.orders.length >= 1, `status ${r.status}`);
   });
+  await check('customer detail shows login method, devices, addresses', async () => {
+    const r = await call('GET', `/admin/customers/${created.customer}`, undefined, adminToken);
+    const c = r.json.customer;
+    expect(c.loginMethod === 'phone' && c.pushDevices.length === 1 && c.notifyOffers === false && r.json.addresses.length >= 1, JSON.stringify({ m: c.loginMethod, d: c.pushDevices?.length, n: c.notifyOffers, a: r.json.addresses?.length }));
+  });
+  await check('GET /admin/notifications (history + channel status + audience)', async () => {
+    const r = await call('GET', '/admin/notifications', undefined, adminToken);
+    expect(r.status === 200 && typeof r.json.channels.push === 'boolean' && r.json.audience.customers > 0, `status ${r.status}`);
+  });
+  await check('POST /admin/notifications (broadcast is recorded)', async () => {
+    const r = await call('POST', '/admin/notifications', { title: 'API test broadcast', body: 'Please ignore — automated test.', link: '/shop', channels: ['push'] }, adminToken);
+    expect(r.status === 202 && r.json.item._id, `status ${r.status} ${r.json.message}`);
+    created.notification = r.json.item._id;
+  });
+  await check('POST /admin/notifications (empty channels → 400)', async () => {
+    const r = await call('POST', '/admin/notifications', { title: 'x x x', body: 'y y y', channels: [] }, adminToken);
+    expect(r.status === 400, `status ${r.status}`);
+  });
   await check('PATCH /admin/customers/:id/block', async () => {
     const r = await call('PATCH', `/admin/customers/${created.customer}/block`, { isBlocked: true }, adminToken);
     expect(r.status === 200 && r.json.customer.isBlocked, `status ${r.status}`);
@@ -435,6 +479,7 @@ async function main() {
   });
   await check('DELETE test order + test customer (direct DB)', async () => {
     await connectDB();
+    if (created.notification) await Notification.deleteOne({ _id: created.notification });
     const [o, u] = await Promise.all([Order.deleteMany({ orderId: { $in: [orderId, created.payOrder, created.hookOrder].filter(Boolean) } }), User.deleteOne({ email })]);
     await disconnectDB();
     expect(o.deletedCount >= 1 && u.deletedCount === 1, `orders ${o.deletedCount}, users ${u.deletedCount}`);

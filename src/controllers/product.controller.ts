@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { Product } from '../models/Product.js';
+import { broadcast } from '../services/notify.js';
 import { ApiError, escapeRegex, paginate } from '../utils/http.js';
 
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -44,7 +45,11 @@ export async function create(req: Request, res: Response) {
   const slug = req.body.slug || slugify(req.body.name);
   // Products without a photo fall back to the storefront's illustrated candle
   const visual = req.body.visual ?? { image: req.body.images?.[0], shape: 'jar', bg: '#F6EDE4', vessel: '#EADBC8', wax: '#FFF9F5' };
-  const product = await Product.create({ ...req.body, slug, visual });
+  const { notify, ...data } = req.body;
+  const product = await Product.create({ ...data, slug, visual });
+  if (notify && product.isActive) {
+    void broadcast({ title: `New at Jyotessa: ${product.name} ✨`, body: product.tagline || `Just launched — ₹${product.price.toLocaleString('en-IN')}.`, link: `/product/${product.slug}`, image: product.images[0], channels: ['push', 'email'], trigger: 'new-product', createdBy: req.user?.name });
+  }
   res.status(201).json({ success: true, product });
 }
 

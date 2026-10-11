@@ -4,10 +4,11 @@ import * as auth from '../controllers/auth.controller.js';
 import * as collections from '../controllers/collection.controller.js';
 import * as coupons from '../controllers/coupon.controller.js';
 import * as inbox from '../controllers/inbox.controller.js';
+import * as notifications from '../controllers/notification.controller.js';
 import * as orders from '../controllers/order.controller.js';
 import * as products from '../controllers/product.controller.js';
 import * as settings from '../controllers/settings.controller.js';
-import { optionalAuth, requireAuth } from '../middlewares/auth.js';
+import { requireAuth } from '../middlewares/auth.js';
 import { validate } from '../middlewares/validate.js';
 import * as s from '../validators/schemas.js';
 import { asyncHandler as h } from '../utils/http.js';
@@ -34,11 +35,18 @@ router.get('/settings', h(settings.publicSettings));
 
 // ——— Checkout, coupon box, Track Order
 router.post('/coupons/validate', formLimiter, validate(s.couponCheckSchema), h(coupons.validateCoupon));
-router.post('/orders', formLimiter, optionalAuth, validate(s.createOrderSchema), h(orders.createOrder));
+// Customers must be logged in to place an order (the checkout asks them to log in first)
+router.post('/orders', formLimiter, requireAuth, validate(s.createOrderSchema), h(orders.createOrder));
 router.post('/orders/:orderId/verify-payment', formLimiter, validate(s.verifyPaymentSchema), h(orders.verifyPayment));
 router.post('/orders/:orderId/retry-payment', formLimiter, h(orders.retryPayment));
 router.get('/orders/mine', requireAuth, h(orders.myOrders));
 router.get('/orders/track/:orderId', authLimiter, h(orders.trackOrder));
+
+// ——— Push notifications + preferences (logged-in customers)
+router.post('/notifications/devices', requireAuth, validate(s.deviceSchema), h(notifications.addDevice));
+router.delete('/notifications/devices', requireAuth, validate(s.deviceSchema), h(notifications.removeDevice));
+router.get('/notifications/preferences', requireAuth, h(notifications.getPreferences));
+router.put('/notifications/preferences', requireAuth, validate(s.preferencesSchema), h(notifications.setPreferences));
 
 // ——— Contact form + support chatbot form
 router.post('/inquiries', formLimiter, validate(s.inquirySchema), h(inbox.createInquiry));

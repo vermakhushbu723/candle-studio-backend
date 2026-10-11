@@ -5,6 +5,7 @@ import * as auth from '../controllers/auth.controller.js';
 import * as collections from '../controllers/collection.controller.js';
 import * as coupons from '../controllers/coupon.controller.js';
 import * as inbox from '../controllers/inbox.controller.js';
+import * as notifications from '../controllers/notification.controller.js';
 import * as orders from '../controllers/order.controller.js';
 import * as products from '../controllers/product.controller.js';
 import * as settings from '../controllers/settings.controller.js';
@@ -62,6 +63,10 @@ for (const [path, ctrl] of [['inquiries', inbox.inquiryAdmin], ['tickets', inbox
 // Store settings
 router.get('/settings/shipping', h(settings.getShipping));
 router.put('/settings/shipping', validate(s.shippingSettingsSchema), h(settings.updateShipping));
+
+// Notifications (broadcast to customers + history)
+router.get('/notifications', h(notifications.list));
+router.post('/notifications', validate(s.broadcastSchema), h(notifications.send));
 
 // Coupons
 router.get('/coupons', h(coupons.listAll));

@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { CATEGORIES, LINES } from '../models/Product.js';
 import { ORDER_STATUSES, PAYMENT_METHODS } from '../models/Order.js';
 
+const notifyFlag = { notify: z.boolean().optional() }; // "Notify customers" checkbox on create forms
+
 // Same rules as the storefront forms
 const phone = z.string().trim().regex(/^[6-9]\d{9}$/, 'must be a valid 10-digit mobile number');
 const pincode = z.string().trim().regex(/^\d{6}$/, 'must be 6 digits');
@@ -78,6 +80,7 @@ export const orderStatusSchema = z.object({
 });
 export const statusNoteSchema = z.object({ status: z.string().optional(), note: z.string().trim().optional() });
 export const couponSchema = z.object({
+  ...notifyFlag,
   code: z.string().trim().toUpperCase().min(3),
   type: z.enum(['percent', 'fixed']),
   value: z.number().positive(),
@@ -88,12 +91,24 @@ export const couponSchema = z.object({
   description: z.string().default(''),
   isActive: z.boolean().default(true),
 });
+// ——— Notifications
+export const deviceSchema = z.object({ token: z.string().min(20).max(4096), device: z.string().max(300).optional() });
+export const preferencesSchema = z.object({ notifyOffers: z.boolean() });
+export const broadcastSchema = z.object({
+  title: z.string().trim().min(3).max(80),
+  body: z.string().trim().min(3).max(240),
+  link: z.string().trim().max(300).optional(),
+  image: z.string().trim().max(500).optional(),
+  channels: z.array(z.enum(['push', 'email'])).min(1),
+});
+
 export const shippingSettingsSchema = z.object({
   shippingFee: z.number().int().min(0).max(5000),
   freeShippingEnabled: z.boolean(),
   freeShippingAbove: z.number().int().min(0).max(1000000),
 });
 export const collectionSchema = z.object({
+  ...notifyFlag,
   name: z.string().trim().min(2),
   slug: z.string().trim().regex(/^[a-z0-9-]+$/, 'use lowercase letters, numbers and dashes').optional(),
   type: z.enum(['festive', 'curated']).default('curated'),
@@ -105,6 +120,7 @@ export const collectionSchema = z.object({
   productIds: z.array(z.string()).optional(), // product slugs in this collection
 });
 export const productSchema = z.object({
+  ...notifyFlag,
   name: z.string().trim().min(2),
   slug: z.string().trim().regex(/^[a-z0-9-]+$/, 'use lowercase letters, numbers and dashes').optional(),
   subtitle: z.string().default(''),
