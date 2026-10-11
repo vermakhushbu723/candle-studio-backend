@@ -1,6 +1,8 @@
 import { createHash, randomInt, timingSafeEqual } from 'node:crypto';
 import type { Request, Response } from 'express';
+import { getAuth } from 'firebase-admin/auth';
 import { env } from '../config/env.js';
+import { pushEnabled } from '../services/push.js';
 import { signToken } from '../middlewares/auth.js';
 import { Otp } from '../models/Otp.js';
 import { User, type UserDoc } from '../models/User.js';
@@ -69,18 +71,42 @@ export async function verifyOtp(req: Request, res: Response) {
     throw new ApiError(400, 'Incorrect OTP. Please try again.');
   }
 
+  await record.deleteOne();
+  await signInPhone(res, phone, name, email);
+}
+
+/** Finds (or creates, when a name is given) the customer for a verified mobile number and signs them in. */
+async function signInPhone(res: Response, phone: string, name?: string, email?: string) {
   let user = (await User.findOne({ phone })) as UserDoc | null;
   if (user && user.role !== 'customer') throw new ApiError(403, 'Please use the admin panel to sign in.');
-  let created = false;
   if (!user) {
     if (!name) throw new ApiError(400, 'name: Please tell us your name');
     if (email && (await User.exists({ email }))) throw new ApiError(409, 'That email is already linked to another account.');
     user = (await User.create({ name, phone, email: email || undefined, loginMethod: 'phone' })) as UserDoc;
-    created = true;
+    return signIn(res, user, 201);
   }
-  await record.deleteOne();
-  if (!created) user.loginMethod = 'phone';
-  await signIn(res, user, created ? 201 : 200);
+  user.loginMethod = 'phone';
+  await signIn(res, user);
+}
+
+// ——— Website: phone + OTP by SMS through Firebase Phone Auth (Google sends the SMS; no DLT needed)
+/** Lets the login form know whether to ask for a name before sending the SMS. */
+export async function phoneStatus(req: Request, res: Response) {
+  res.json({ success: true, isNewUser: !(await User.exists({ phone: req.body.phone, role: 'customer' })) });
+}
+
+/** The website verified the SMS code with Firebase and sends us the Firebase ID token. */
+export async function firebasePhoneLogin(req: Request, res: Response) {
+  if (!pushEnabled()) throw new ApiError(503, 'Phone login is not configured yet.'); // initialises Firebase Admin
+  let decoded;
+  try {
+    decoded = await getAuth().verifyIdToken(req.body.idToken);
+  } catch {
+    throw new ApiError(401, 'OTP verification failed. Please try again.');
+  }
+  const m = /^\+91([6-9]\d{9})$/.exec(decoded.phone_number ?? '');
+  if (decoded.firebase?.sign_in_provider !== 'phone' || !m) throw new ApiError(401, 'Please sign in with an Indian mobile number.');
+  await signInPhone(res, m[1], req.body.name, req.body.email || undefined);
 }
 
 // ——— Website: Google sign-in (ID token from Google Identity Services)

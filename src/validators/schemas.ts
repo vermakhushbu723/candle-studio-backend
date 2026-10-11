@@ -18,6 +18,12 @@ export const otpVerifySchema = z.object({
   email: email.optional().or(z.literal('')),
 });
 export const googleSchema = z.object({ credential: z.string().min(20) });
+export const phoneStatusSchema = z.object({ phone });
+export const firebasePhoneSchema = z.object({
+  idToken: z.string().min(100),
+  name: z.string().trim().min(2).optional(), // required only for a new account
+  email: email.optional().or(z.literal('')),
+});
 export const loginSchema = z.object({ email, password: z.string().min(1) });
 export const profileSchema = z.object({
   name: z.string().trim().min(2).optional(),

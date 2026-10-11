@@ -23,6 +23,8 @@ const formLimiter = rateLimit({ windowMs: 60 * 60 * 1000, limit: 60, standardHea
 router.post('/auth/otp/send', authLimiter, validate(s.otpSendSchema), h(auth.sendOtp));
 router.post('/auth/otp/verify', authLimiter, validate(s.otpVerifySchema), h(auth.verifyOtp));
 router.post('/auth/google', authLimiter, validate(s.googleSchema), h(auth.googleLogin));
+router.post('/auth/phone/status', authLimiter, validate(s.phoneStatusSchema), h(auth.phoneStatus));
+router.post('/auth/phone/firebase', authLimiter, validate(s.firebasePhoneSchema), h(auth.firebasePhoneLogin));
 router.get('/auth/me', requireAuth, h(auth.me));
 router.put('/auth/me', requireAuth, validate(s.profileSchema), h(auth.updateMe));
 router.put('/auth/password', requireAuth, validate(s.passwordSchema), h(auth.changePassword));
