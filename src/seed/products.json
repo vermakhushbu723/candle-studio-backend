@@ -1,0 +1,1026 @@
+[
+  {
+    "slug": "mini-pocket-magic",
+    "images": [
+      "/images/products/kit-tester.webp"
+    ],
+    "name": "The Mini Pocket Magic",
+    "subtitle": "The Tester Pack",
+    "line": "pearled",
+    "category": "pearl-kits",
+    "price": 349,
+    "compareAt": 449,
+    "rating": 4.8,
+    "reviews": 412,
+    "badge": "Tester Kit",
+    "moods": [
+      "budget",
+      "self",
+      "calm"
+    ],
+    "tagline": "No jar needed — pour it into a glass you already own.",
+    "description": "A compact introduction to pearled soy wax for anyone curious about a cleaner, more flexible candle. Use a vessel you already love and turn an ordinary evening into a warm little ritual.",
+    "includes": [
+      "150g White Pearl Wax Powder (pouch)",
+      "10 Braided Cotton Wicks",
+      "1 Micro Shell & Floral Packet (10g)"
+    ],
+    "bestFor": "First-time buyers, students and budget gifting",
+    "howToUse": [
+      "Fill a heat-safe vessel two-thirds full with pearls.",
+      "Place a wick in the centre, leaving a quarter inch standing.",
+      "Light it on a stable surface and enjoy.",
+      "Once cool, lift out the hardened pool and add a fresh wick."
+    ],
+    "fragrances": true,
+    "visual": {
+      "image": "/images/products/kit-tester.webp",
+      "shape": "pouch",
+      "bg": "#F6EDE4",
+      "vessel": "#C9A27E",
+      "wax": "#FFFFFF",
+      "pearls": true
+    },
+    "collections": [
+      "cartoons-kids"
+    ],
+    "stock": 6,
+    "sortOrder": 0
+  },
+  {
+    "slug": "shot-glass-combo",
+    "images": [
+      "/images/products/kit-duo.webp"
+    ],
+    "name": "The Everyday Shot Glass Combo",
+    "subtitle": "Set of 2 Mini Candles",
+    "line": "pearled",
+    "category": "pearl-kits",
+    "price": 499,
+    "compareAt": 599,
+    "rating": 4.9,
+    "reviews": 368,
+    "badge": "Set of 2",
+    "moods": [
+      "budget",
+      "gift",
+      "calm"
+    ],
+    "tagline": "Two small candles — one for the desk, one for the bedside.",
+    "description": "Two ready-to-style mini candles for small spaces, thoughtful gifting and everyday calm. Choose a fragrance that suits the room, then refresh each candle by replacing the wick when it cools.",
+    "includes": [
+      "2 Mini Plain Glass Shot Jars",
+      "200g Pearl Wax Powder (Ivory / Pastel)",
+      "15 Braided Cotton Wicks",
+      "1 Mini Fragrance Oil Vial (5ml)"
+    ],
+    "bestFor": "Work desks, bedside tables and small gifts",
+    "howToUse": [
+      "Fill a heat-safe vessel two-thirds full with pearls.",
+      "Place a wick in the centre, leaving a quarter inch standing.",
+      "Light it on a stable surface and enjoy.",
+      "Once cool, lift out the hardened pool and add a fresh wick."
+    ],
+    "fragrances": true,
+    "visual": {
+      "image": "/images/products/kit-duo.webp",
+      "shape": "duo",
+      "bg": "#FDE8EB",
+      "vessel": "#E8D5C4",
+      "wax": "#FFF4F0",
+      "pearls": true
+    },
+    "collections": [
+      "ocean",
+      "christmas-special",
+      "new-year-special"
+    ],
+    "stock": 14,
+    "sortOrder": 1
+  },
+  {
+    "slug": "boho-botanical",
+    "images": [
+      "/images/products/kit-botanical.webp"
+    ],
+    "name": "Boho Botanical",
+    "subtitle": "Floral Aesthetic Kit",
+    "line": "pearled",
+    "category": "pearl-kits",
+    "price": 899,
+    "compareAt": 1099,
+    "rating": 4.9,
+    "reviews": 294,
+    "badge": "New",
+    "moods": [
+      "gift",
+      "calm",
+      "floral"
+    ],
+    "tagline": "Dried lavender and rose petals in warm, earthy light.",
+    "description": "A botanical candle kit with a gentle vanilla-lavender scent and tactile dried florals. The ribbed glass and warm palette make it an easy fit for a bedside table, reading nook or self-care corner.",
+    "includes": [
+      "250g Pastel Pearl Wax",
+      "20 Braided Cotton Wicks",
+      "1 Ribbed Glass Jar",
+      "Dried Lavender & Rose Petals",
+      "10ml Lavender Vanilla Oil"
+    ],
+    "bestFor": "Self-care corners and floral lovers",
+    "howToUse": [
+      "Fill a heat-safe vessel two-thirds full with pearls.",
+      "Place a wick in the centre, leaving a quarter inch standing.",
+      "Light it on a stable surface and enjoy.",
+      "Once cool, lift out the hardened pool and add a fresh wick."
+    ],
+    "fragrances": true,
+    "visual": {
+      "image": "/images/products/kit-botanical.webp",
+      "shape": "jar",
+      "bg": "#F6E1EA",
+      "vessel": "#D98CA3",
+      "wax": "#FFF6F8",
+      "pearls": true,
+      "decor": "petals"
+    },
+    "collections": [
+      "aesthetic",
+      "christmas-special"
+    ],
+    "stock": 22,
+    "sortOrder": 2
+  },
+  {
+    "slug": "ocean-escape",
+    "images": [
+      "/images/products/kit-ocean.webp"
+    ],
+    "name": "The Ocean Escape",
+    "subtitle": "Shell & Pearl Decor Kit",
+    "line": "pearled",
+    "category": "pearl-kits",
+    "price": 1099,
+    "compareAt": 1399,
+    "rating": 5,
+    "reviews": 687,
+    "badge": "Most Popular",
+    "moods": [
+      "gift",
+      "host",
+      "fresh"
+    ],
+    "tagline": "Sand, shells and floating pearls under a layer of wax.",
+    "description": "A coastal centrepiece that pairs soft ocean fragrance with natural shells and luminous pearl wax. It is made for slow dinners, festive hosting and spaces that deserve a little seaside light.",
+    "includes": [
+      "300g White Pearl Wax Powder",
+      "25 Braided Cotton Wicks",
+      "1 Pack Natural Sea Shells & Starfish",
+      "1 Pack Faux White Floating Pearls",
+      "1 Cylindrical Glass Jar",
+      "10ml Ocean Breeze Fragrance Oil"
+    ],
+    "bestFor": "Dinner tables, hosting and premium gifting",
+    "howToUse": [
+      "Fill a heat-safe vessel two-thirds full with pearls.",
+      "Place a wick in the centre, leaving a quarter inch standing.",
+      "Light it on a stable surface and enjoy.",
+      "Once cool, lift out the hardened pool and add a fresh wick."
+    ],
+    "fragrances": true,
+    "visual": {
+      "image": "/images/products/kit-ocean.webp",
+      "shape": "jar",
+      "bg": "#E4EEF0",
+      "vessel": "#9FC3C9",
+      "wax": "#FFFFFF",
+      "pearls": true,
+      "decor": "shells"
+    },
+    "collections": [
+      "ocean",
+      "new-year-special"
+    ],
+    "stock": 35,
+    "sortOrder": 3
+  },
+  {
+    "slug": "endless-refill",
+    "images": [
+      "/images/products/kit-refill.webp"
+    ],
+    "name": "The Endless Refill & Scent Bar",
+    "subtitle": "For jars you already own",
+    "line": "pearled",
+    "category": "refills",
+    "price": 799,
+    "compareAt": 999,
+    "rating": 4.9,
+    "reviews": 382,
+    "badge": "Refill",
+    "moods": [
+      "self",
+      "fresh",
+      "value"
+    ],
+    "tagline": "No jar, no filler — just wax, wicks and scent.",
+    "description": "A generous refill for turning the vessels you already own into fresh pearled candles again and again. With two scents, spare wicks and simple decor, it keeps your favourite candle setup in rotation.",
+    "includes": [
+      "600g Pearl Wax — 2 × 300g pouches",
+      "50 Braided Cotton Wicks",
+      "2 Fragrance Oils (Sandalwood & Jasmine)",
+      "1 Mini Decor Refill"
+    ],
+    "bestFor": "Existing customers and eco-conscious homes",
+    "howToUse": [
+      "Fill a heat-safe vessel two-thirds full with pearls.",
+      "Place a wick in the centre, leaving a quarter inch standing.",
+      "Light it on a stable surface and enjoy.",
+      "Once cool, lift out the hardened pool and add a fresh wick."
+    ],
+    "fragrances": true,
+    "visual": {
+      "image": "/images/products/kit-refill.webp",
+      "shape": "pouch",
+      "bg": "#E8D5C4",
+      "vessel": "#8B5E3C",
+      "wax": "#FFF9F5",
+      "pearls": true,
+      "double": true
+    },
+    "collections": [
+      "ocean",
+      "spiritual"
+    ],
+    "stock": 48,
+    "sortOrder": 4
+  },
+  {
+    "slug": "iced-coffee-candle",
+    "images": [
+      "/images/products/iced-coffee-candle-1.jpg"
+    ],
+    "name": "Iced Coffee Candle",
+    "subtitle": "Café-style glass tumbler",
+    "line": "handcrafted",
+    "category": "food-inspired",
+    "price": 549,
+    "compareAt": 649,
+    "rating": 4.8,
+    "reviews": 221,
+    "badge": "Hot Selling",
+    "moods": [
+      "self",
+      "cozy",
+      "fun"
+    ],
+    "tagline": "Cold brew, cream swirl and wax ice cubes that never melt away.",
+    "description": "A hand-poured soy candle styled like your favourite café order — layered coffee and cream wax with sculpted wax ice cubes, topped with a rich roasted coffee fragrance.",
+    "includes": [
+      "1 Glass Tumbler Candle (220g)",
+      "Roasted Coffee & Vanilla Fragrance",
+      "35–40 hours burn time"
+    ],
+    "bestFor": "Coffee lovers and work-from-home desks",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/iced-coffee-candle-1.jpg",
+      "shape": "glass",
+      "bg": "#F3E3D3",
+      "vessel": "#6F4A32",
+      "wax": "#C79A74",
+      "topper": "ice"
+    },
+    "collections": [
+      "cartoons-kids",
+      "christmas-special"
+    ],
+    "stock": 60,
+    "sortOrder": 5
+  },
+  {
+    "slug": "chai-parle-g-candle",
+    "images": [
+      "/images/products/chai-parle-g-candle-1.jpg",
+      "/images/products/chai-parle-g-candle-2.jpg"
+    ],
+    "name": "Chai & Parle-G Biscuit Candle",
+    "subtitle": "Kulhad nostalgia",
+    "line": "handcrafted",
+    "category": "food-inspired",
+    "price": 239,
+    "compareAt": 300,
+    "rating": 4.9,
+    "reviews": 540,
+    "badge": "Bestseller",
+    "moods": [
+      "budget",
+      "cozy",
+      "fun",
+      "gift"
+    ],
+    "tagline": "Every Indian evening, poured into a tiny kulhad.",
+    "description": "A mini kulhad candle with masala chai coloured wax and a wax Parle-G biscuit dipped just right. Smells of cardamom, ginger and warm milk tea.",
+    "includes": [
+      "1 Clay Kulhad Candle (90g)",
+      "Masala Chai Fragrance",
+      "18–20 hours burn time"
+    ],
+    "bestFor": "Chai lovers, return gifts and office secret santa",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/chai-parle-g-candle-1.jpg",
+      "shape": "kulhad",
+      "bg": "#F5E1C8",
+      "vessel": "#B5673F",
+      "wax": "#D9A36B",
+      "topper": "biscuit"
+    },
+    "collections": [
+      "winter"
+    ],
+    "stock": 6,
+    "sortOrder": 6
+  },
+  {
+    "slug": "rasmalai-candle",
+    "images": [
+      "/images/products/rasmalai-candle-1.jpg",
+      "/images/products/rasmalai-candle-2.jpg"
+    ],
+    "name": "Rasmalai Candle",
+    "subtitle": "Mithai bowl collection",
+    "line": "handcrafted",
+    "category": "food-inspired",
+    "price": 499,
+    "compareAt": 599,
+    "rating": 4.7,
+    "reviews": 132,
+    "moods": [
+      "gift",
+      "fun",
+      "festive"
+    ],
+    "tagline": "Saffron, cardamom and pistachio — calorie free.",
+    "description": "Soft saffron-milk wax with sculpted rasmalai discs and pistachio flakes, poured into a ceramic bowl. A sweet, creamy scent perfect for festive tables.",
+    "includes": [
+      "1 Ceramic Bowl Candle (200g)",
+      "Kesar Elaichi Fragrance",
+      "30 hours burn time"
+    ],
+    "bestFor": "Festive gifting and dessert tables",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/rasmalai-candle-1.jpg",
+      "shape": "bowl",
+      "bg": "#FBF0D9",
+      "vessel": "#EADBC8",
+      "wax": "#F7E3B0",
+      "topper": "discs"
+    },
+    "collections": [
+      "winter"
+    ],
+    "stock": 14,
+    "sortOrder": 7
+  },
+  {
+    "slug": "jalebi-rabdi-candle",
+    "images": [
+      "/images/products/jalebi-rabdi-candle-1.jpg",
+      "/images/products/jalebi-rabdi-candle-2.jpg"
+    ],
+    "name": "Jalebi Rabdi Candle",
+    "subtitle": "Mithai bowl collection",
+    "line": "handcrafted",
+    "category": "food-inspired",
+    "price": 449,
+    "compareAt": 549,
+    "rating": 4.8,
+    "reviews": 176,
+    "badge": "Hot Selling",
+    "moods": [
+      "gift",
+      "fun",
+      "festive"
+    ],
+    "tagline": "Crispy wax jalebis on a bed of creamy rabdi.",
+    "description": "Hand-piped wax jalebi swirls resting on a thick rabdi-coloured base. Sweet saffron and caramel fragrance that fills the room like a halwai shop on Sunday morning.",
+    "includes": [
+      "1 Bowl Candle (180g)",
+      "Saffron Caramel Fragrance",
+      "28 hours burn time"
+    ],
+    "bestFor": "Foodies and festive hampers",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/jalebi-rabdi-candle-1.jpg",
+      "shape": "bowl",
+      "bg": "#FCE9CF",
+      "vessel": "#F0E1CC",
+      "wax": "#FFF1D6",
+      "topper": "swirls"
+    },
+    "collections": [
+      "diwali-special"
+    ],
+    "stock": 22,
+    "sortOrder": 8
+  },
+  {
+    "slug": "dry-fruit-delight",
+    "images": [
+      "/images/products/dry-fruit-delight-1.webp",
+      "/images/products/dry-fruit-delight-2.webp",
+      "/images/products/dry-fruit-delight-3.webp"
+    ],
+    "name": "Dry Fruit Delight Candle",
+    "subtitle": "Kaju & Badam",
+    "line": "handcrafted",
+    "category": "food-inspired",
+    "price": 449,
+    "rating": 4.6,
+    "reviews": 84,
+    "moods": [
+      "gift",
+      "festive"
+    ],
+    "tagline": "A dry-fruit box that glows instead of gets eaten.",
+    "description": "Sculpted wax cashews and almonds in a gold-rimmed tray. Warm nutty praline fragrance — a Diwali classic, reimagined.",
+    "includes": [
+      "1 Tray Candle (160g)",
+      "Praline Fragrance",
+      "24 hours burn time"
+    ],
+    "bestFor": "Diwali and corporate gifting",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/dry-fruit-delight-1.webp",
+      "shape": "tray",
+      "bg": "#F5E6C4",
+      "vessel": "#C9A227",
+      "wax": "#E8C893",
+      "topper": "nuts"
+    },
+    "collections": [
+      "diwali-special",
+      "christmas-special"
+    ],
+    "stock": 35,
+    "sortOrder": 9
+  },
+  {
+    "slug": "heart-bowl-candle",
+    "images": [
+      "/images/products/heart-bowl-candle-1.jpg",
+      "/images/products/heart-bowl-candle-2.jpg"
+    ],
+    "name": "Heart Bowl Candle",
+    "subtitle": "Love in the Air",
+    "line": "handcrafted",
+    "category": "love-in-the-air",
+    "price": 749,
+    "compareAt": 999,
+    "rating": 4.9,
+    "reviews": 263,
+    "badge": "Hot Selling",
+    "moods": [
+      "gift",
+      "romance"
+    ],
+    "tagline": "A bowl full of tiny wax hearts and rose.",
+    "description": "A glass bowl filled with blush pink wax, crowned with sculpted hearts and a velvet rose fragrance. The anniversary gift that actually gets used.",
+    "includes": [
+      "1 Glass Bowl Candle (260g)",
+      "Velvet Rose Fragrance",
+      "40 hours burn time",
+      "Gift-ready box"
+    ],
+    "bestFor": "Anniversaries, Valentine’s and proposals",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/heart-bowl-candle-1.jpg",
+      "shape": "bowl",
+      "bg": "#FDE8EB",
+      "vessel": "#F3C6D1",
+      "wax": "#F7B8C6",
+      "topper": "hearts"
+    },
+    "collections": [
+      "valentine-special"
+    ],
+    "stock": 48,
+    "sortOrder": 10
+  },
+  {
+    "slug": "together-forever",
+    "images": [
+      "/images/products/together-forever-1.jpg",
+      "/images/products/together-forever-2.jpg",
+      "/images/products/together-forever-3.jpg"
+    ],
+    "name": "Together Forever Couple Candle",
+    "subtitle": "Love in the Air",
+    "line": "handcrafted",
+    "category": "love-in-the-air",
+    "price": 299,
+    "compareAt": 399,
+    "rating": 4.8,
+    "reviews": 198,
+    "moods": [
+      "budget",
+      "gift",
+      "romance"
+    ],
+    "tagline": "Two figures, one flame, zero words needed.",
+    "description": "A sculpted soy candle of an embracing couple. Burns with a soft vanilla musk scent and makes a lovely keepsake even unlit.",
+    "includes": [
+      "1 Sculpted Candle (120g)",
+      "Vanilla Musk Fragrance",
+      "15 hours burn time"
+    ],
+    "bestFor": "Couples and wedding favours",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/together-forever-1.jpg",
+      "shape": "heart",
+      "bg": "#F8E3E6",
+      "vessel": "#D98CA3",
+      "wax": "#F4C2CC"
+    },
+    "collections": [
+      "valentine-special",
+      "new-year-special"
+    ],
+    "stock": 60,
+    "sortOrder": 11
+  },
+  {
+    "slug": "heart-teddy-candle",
+    "images": [
+      "/images/products/heart-teddy-candle-1.jpg",
+      "/images/products/heart-teddy-candle-2.jpg",
+      "/images/products/heart-teddy-candle-3.jpg"
+    ],
+    "name": "Heart Teddy Candle",
+    "subtitle": "Love in the Air",
+    "line": "handcrafted",
+    "category": "love-in-the-air",
+    "price": 549,
+    "compareAt": 649,
+    "rating": 4.7,
+    "reviews": 91,
+    "moods": [
+      "gift",
+      "romance",
+      "fun"
+    ],
+    "tagline": "A tiny teddy holding a very big heart.",
+    "description": "A hand-poured teddy bear candle hugging a red heart, finished in soft pastel wax with a strawberry cream scent.",
+    "includes": [
+      "1 Sculpted Candle (140g)",
+      "Strawberry Cream Fragrance",
+      "18 hours burn time"
+    ],
+    "bestFor": "Birthdays and Valentine’s",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/heart-teddy-candle-1.jpg",
+      "shape": "heart",
+      "bg": "#FCE4E0",
+      "vessel": "#C94F5E",
+      "wax": "#E9A8A0"
+    },
+    "collections": [
+      "cartoons-kids",
+      "valentine-special"
+    ],
+    "stock": 6,
+    "sortOrder": 12
+  },
+  {
+    "slug": "bouquet-candle",
+    "images": [
+      "/images/products/bouquet-candle-1.jpg",
+      "/images/products/bouquet-candle-2.jpg"
+    ],
+    "name": "Bouquet Candle",
+    "subtitle": "Floral collection",
+    "line": "handcrafted",
+    "category": "floral",
+    "price": 1299,
+    "compareAt": 1800,
+    "rating": 4.9,
+    "reviews": 142,
+    "badge": "Premium",
+    "moods": [
+      "gift",
+      "floral",
+      "romance"
+    ],
+    "tagline": "Flowers that never wilt — and smell even better.",
+    "description": "A frosted jar crowned with a hand-sculpted bouquet of wax peonies, roses and buds. Each petal is shaped by hand, so no two bouquets are exactly alike.",
+    "includes": [
+      "1 Frosted Jar Candle (300g)",
+      "Peony & Rose Fragrance",
+      "45 hours burn time",
+      "Luxury gift box"
+    ],
+    "bestFor": "Mother’s Day, anniversaries and luxury gifting",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/bouquet-candle-1.jpg",
+      "shape": "jar",
+      "bg": "#F6E1EA",
+      "vessel": "#EBD3DC",
+      "wax": "#FBEFF3",
+      "topper": "flowers"
+    },
+    "collections": [
+      "valentine-special"
+    ],
+    "stock": 14,
+    "sortOrder": 13
+  },
+  {
+    "slug": "lotus-pond-candle",
+    "images": [
+      "/images/products/lotus-pond-candle-1.jpg",
+      "/images/products/lotus-pond-candle-2.jpg"
+    ],
+    "name": "Lotus Pond Candle",
+    "subtitle": "Floral collection",
+    "line": "handcrafted",
+    "category": "floral",
+    "price": 699,
+    "compareAt": 799,
+    "rating": 4.8,
+    "reviews": 117,
+    "moods": [
+      "calm",
+      "floral",
+      "festive"
+    ],
+    "tagline": "A still pond, a blooming lotus, a quiet flame.",
+    "description": "Blue-green gel wax pond with a floating hand-sculpted lotus and lily pads. Fresh water lily fragrance for pooja corners and calm spaces.",
+    "includes": [
+      "1 Bowl Candle (220g)",
+      "Water Lily Fragrance",
+      "30 hours burn time"
+    ],
+    "bestFor": "Pooja rooms, meditation and housewarmings",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/lotus-pond-candle-1.jpg",
+      "shape": "bowl",
+      "bg": "#E3EEEA",
+      "vessel": "#A8CFC3",
+      "wax": "#BFE0D6",
+      "topper": "lotus"
+    },
+    "collections": [
+      "spiritual"
+    ],
+    "stock": 22,
+    "sortOrder": 14
+  },
+  {
+    "slug": "lavender-latte-candle",
+    "images": [
+      "/images/products/lavender-latte-candle-1.jpg"
+    ],
+    "name": "Lavender Latte Candle",
+    "subtitle": "Floral collection",
+    "line": "handcrafted",
+    "category": "floral",
+    "price": 499,
+    "compareAt": 599,
+    "rating": 4.7,
+    "reviews": 88,
+    "moods": [
+      "calm",
+      "self",
+      "floral",
+      "cozy"
+    ],
+    "tagline": "Foamy lavender latte for slow Sunday mornings.",
+    "description": "A café cup candle with frothy wax foam and dried lavender sprigs. A soothing lavender-vanilla scent for winding down.",
+    "includes": [
+      "1 Cup Candle (200g)",
+      "Lavender Vanilla Fragrance",
+      "32 hours burn time"
+    ],
+    "bestFor": "Bedrooms and self-care rituals",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/lavender-latte-candle-1.jpg",
+      "shape": "glass",
+      "bg": "#ECE4F3",
+      "vessel": "#B9A3D1",
+      "wax": "#E5D9F0",
+      "topper": "foam"
+    },
+    "collections": [
+      "aesthetic",
+      "winter"
+    ],
+    "stock": 35,
+    "sortOrder": 15
+  },
+  {
+    "slug": "kamal-jyoti-urli",
+    "images": [
+      "/images/products/kamal-jyoti-urli-1.webp",
+      "/images/products/kamal-jyoti-urli-2.webp",
+      "/images/products/kamal-jyoti-urli-3.webp"
+    ],
+    "name": "Kamal Jyoti Luxury Urli",
+    "subtitle": "Luxury Diwali centrepiece",
+    "line": "handcrafted",
+    "category": "luxury",
+    "price": 2999,
+    "compareAt": 3100,
+    "rating": 5,
+    "reviews": 46,
+    "badge": "Luxury",
+    "moods": [
+      "festive",
+      "host",
+      "gift"
+    ],
+    "tagline": "A brass urli of floating lotuses for your grandest evening.",
+    "description": "A hand-finished brass-tone urli filled with floating wax lotuses and diyas. Designed as a statement Diwali centrepiece with a warm sandalwood-marigold fragrance.",
+    "includes": [
+      "1 Brass-tone Urli (large)",
+      "5 Floating Lotus Candles",
+      "5 Diya Candles",
+      "Sandalwood & Marigold Fragrance"
+    ],
+    "bestFor": "Diwali hosting and premium corporate gifting",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/kamal-jyoti-urli-1.webp",
+      "shape": "tray",
+      "bg": "#F5E6C4",
+      "vessel": "#B8860B",
+      "wax": "#F3C77A",
+      "topper": "lotus"
+    },
+    "collections": [
+      "diwali-special",
+      "spiritual"
+    ],
+    "stock": 48,
+    "sortOrder": 16
+  },
+  {
+    "slug": "festive-diya-set",
+    "images": [
+      "/images/products/festive-diya-set-1.webp",
+      "/images/products/festive-diya-set-2.webp",
+      "/images/products/festive-diya-set-3.webp"
+    ],
+    "name": "Festive Diya Candle Set",
+    "subtitle": "Set of 4",
+    "line": "handcrafted",
+    "category": "luxury",
+    "price": 249,
+    "compareAt": 329,
+    "rating": 4.8,
+    "reviews": 305,
+    "moods": [
+      "budget",
+      "festive",
+      "gift"
+    ],
+    "tagline": "Four hand-painted diyas, zero oil spills.",
+    "description": "Clay diyas filled with soy wax in festive shades and hand-painted rims. Clean-burning, reusable and ready to gift.",
+    "includes": [
+      "4 Clay Diya Candles",
+      "Marigold Fragrance",
+      "8 hours burn time each"
+    ],
+    "bestFor": "Diwali, housewarmings and return gifts",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/festive-diya-set-1.webp",
+      "shape": "kulhad",
+      "bg": "#FBE3C8",
+      "vessel": "#C1502E",
+      "wax": "#F2B35A"
+    },
+    "collections": [
+      "diwali-special",
+      "spiritual"
+    ],
+    "stock": 60,
+    "sortOrder": 17
+  },
+  {
+    "slug": "elegant-lady-candle",
+    "images": [
+      "/images/products/elegant-lady-candle-1.jpg",
+      "/images/products/elegant-lady-candle-2.jpg"
+    ],
+    "name": "Elegant Lady Candle",
+    "subtitle": "Sculpted decor",
+    "line": "handcrafted",
+    "category": "luxury",
+    "price": 449,
+    "compareAt": 549,
+    "rating": 4.7,
+    "reviews": 73,
+    "moods": [
+      "gift",
+      "calm"
+    ],
+    "tagline": "Sculpture by day, soft candlelight by night.",
+    "description": "A graceful sculpted silhouette candle in matte ivory soy wax. Subtle white musk scent that suits shelves and vanities.",
+    "includes": [
+      "1 Sculpted Candle (150g)",
+      "White Musk Fragrance",
+      "16 hours burn time"
+    ],
+    "bestFor": "Shelf decor and vanity tables",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/elegant-lady-candle-1.jpg",
+      "shape": "pillar",
+      "bg": "#F1ECE6",
+      "vessel": "#EADBC8",
+      "wax": "#FAF5EE"
+    },
+    "collections": [
+      "aesthetic",
+      "new-year-special"
+    ],
+    "stock": 6,
+    "sortOrder": 18
+  },
+  {
+    "slug": "cactus-tray-candle",
+    "images": [
+      "/images/products/cactus-tray-candle-1.jpg"
+    ],
+    "name": "Cactus Tray Candle",
+    "subtitle": "Desert garden",
+    "line": "handcrafted",
+    "category": "wax-fresheners",
+    "price": 999,
+    "compareAt": 1299,
+    "rating": 4.8,
+    "reviews": 101,
+    "moods": [
+      "fresh",
+      "host",
+      "fun"
+    ],
+    "tagline": "A little succulent garden that never needs water.",
+    "description": "A wooden tray of sculpted wax cacti and succulents in sage greens. Fresh green fig fragrance that doubles as a room freshener unlit.",
+    "includes": [
+      "1 Wooden Tray",
+      "3 Cactus Candles",
+      "Green Fig Fragrance",
+      "20 hours burn time each"
+    ],
+    "bestFor": "Study tables and plant lovers",
+    "howToUse": [
+      "Trim the wick to 5mm before every burn.",
+      "Burn for 2–3 hours the first time so the pool reaches the edges.",
+      "Keep away from drafts, children and pets.",
+      "Never burn for more than 4 hours at a stretch."
+    ],
+    "visual": {
+      "image": "/images/products/cactus-tray-candle-1.jpg",
+      "shape": "tray",
+      "bg": "#E6EDE2",
+      "vessel": "#A47551",
+      "wax": "#9CB892",
+      "topper": "cactus"
+    },
+    "collections": [
+      "cartoons-kids",
+      "aesthetic"
+    ],
+    "stock": 14,
+    "sortOrder": 19
+  },
+  {
+    "slug": "wardrobe-wax-sachets",
+    "images": [
+      "/images/products/wardrobe-wax-sachets-1.jpg",
+      "/images/products/wardrobe-wax-sachets-2.jpg",
+      "/images/products/wardrobe-wax-sachets-3.jpg"
+    ],
+    "name": "Wardrobe Freshener Wax Sachets",
+    "subtitle": "Pack of 2",
+    "line": "handcrafted",
+    "category": "wax-fresheners",
+    "price": 159,
+    "compareAt": 219,
+    "rating": 4.6,
+    "reviews": 257,
+    "badge": "Hot Selling",
+    "moods": [
+      "budget",
+      "fresh",
+      "self"
+    ],
+    "tagline": "Dried-flower wax tablets that make your wardrobe smell like a spa.",
+    "description": "Unlit scented wax tablets pressed with dried flowers. Hang them in wardrobes, cars or drawers for 3–4 weeks of gentle fragrance.",
+    "includes": [
+      "2 Scented Wax Sachets",
+      "Jute Hanging Cord",
+      "3–4 weeks fragrance"
+    ],
+    "bestFor": "Wardrobes, cars and drawers",
+    "howToUse": [
+      "Hang in a closed space.",
+      "Scratch the surface lightly to refresh the scent.",
+      "Do not light — not a candle."
+    ],
+    "visual": {
+      "image": "/images/products/wardrobe-wax-sachets-1.jpg",
+      "shape": "sachet",
+      "bg": "#F0EAF5",
+      "vessel": "#C3B1D8",
+      "wax": "#F6EFFA",
+      "decor": "petals",
+      "unlit": true
+    },
+    "collections": [
+      "winter"
+    ],
+    "stock": 22,
+    "sortOrder": 20
+  }
+]
