@@ -54,8 +54,8 @@ function orderMessage(o: OrderDoc, event: OrderEvent) {
     },
     Delivered: {
       title: 'Delivered — enjoy the glow! 🎉',
-      body: `Order ${id} has been delivered. We hope you love it!`,
-      lines: [`Hi ${name}, order ${id} has been delivered.`, 'We hope it brings a little warmth to your home. Tag us on Instagram — we love seeing your setups!'],
+      body: `Order ${id} has been delivered. Loved it? Tap to rate us on Google ⭐`,
+      lines: [`Hi ${name}, order ${id} has been delivered.`, 'We hope it brings a little warmth to your home. If you love your candles, a quick Google review helps our small studio more than you know — it takes 30 seconds.'],
     },
     Cancelled: {
       title: 'Order cancelled',
@@ -63,7 +63,10 @@ function orderMessage(o: OrderDoc, event: OrderEvent) {
       lines: [`Hi ${name}, order ${id} has been cancelled.`, ...(o.paymentMethod !== 'cod' && o.paymentStatus !== 'Pending' ? ['Your refund will reach the original payment method in 5–7 working days.'] : []), 'If this wasn’t expected, just reply to this email and we’ll help.'],
     },
   };
-  return { ...m[event], link: trackLink };
+  // Delivered → the review page; everything else → order tracking
+  return event === 'Delivered'
+    ? { ...m[event], link: env.googleReviewUrl, button: { label: 'Rate us on Google ⭐', url: env.googleReviewUrl } }
+    : { ...m[event], link: trackLink, button: { label: 'Track your order', url: env.siteUrl + trackLink } };
 }
 
 async function tokensFor(userIds: unknown[]) {
@@ -79,7 +82,7 @@ export async function notifyOrder(order: OrderDoc, event: OrderEvent) {
     await Promise.all([
       sendPush(tokens, { title: msg.title, body: msg.body, link: msg.link }),
       order.customer?.email
-        ? sendMail(order.customer.email, `${msg.title.replace(/\s*\p{Extended_Pictographic}/gu, '')} · Order #${order.orderId}`, emailLayout({ heading: msg.title, lines: msg.lines, button: { label: 'Track your order', url: env.siteUrl + msg.link } }))
+        ? sendMail(order.customer.email, `${msg.title.replace(/\s*\p{Extended_Pictographic}/gu, '')} · Order #${order.orderId}`, emailLayout({ heading: msg.title, lines: msg.lines, button: msg.button }))
         : null,
       // Team alert for every new order
       (event === 'placed' || event === 'paid') && env.adminNotifyEmail
