@@ -6,9 +6,14 @@ import { ApiError } from '../utils/http.js';
 type CouponDoc = InstanceType<typeof Coupon>;
 
 /** Returns the discount for a subtotal, or throws a customer-friendly error. */
-export async function evaluateCoupon(code: string, subtotal: number) {
+export async function evaluateCoupon(code: string, subtotal: number, userId?: string) {
   const coupon = (await Coupon.findOne({ code: code.trim().toUpperCase() })) as CouponDoc | null;
   if (!coupon || !coupon.isActive) throw new ApiError(404, 'That code is not valid');
+  // Personal coupons (Follow & Save) work only for the account that earned them
+  if (coupon.owner) {
+    if (!userId) throw new ApiError(401, 'Please log in to use this code.');
+    if (String(coupon.owner) !== userId) throw new ApiError(403, 'This code belongs to another account.');
+  }
   if (coupon.expiry < new Date()) throw new ApiError(400, 'This coupon has expired.');
   if (coupon.usageLimit && coupon.usedCount >= coupon.usageLimit) throw new ApiError(400, 'This coupon has reached its usage limit.');
   if (subtotal < coupon.minOrder) throw new ApiError(400, `Add items worth ₹${coupon.minOrder - subtotal} more to use ${coupon.code}.`);
@@ -26,7 +31,7 @@ const publicCoupon = (c: CouponDoc) => ({ code: c.code, type: c.type, value: c.v
 
 // ——— Public
 export async function validateCoupon(req: Request, res: Response) {
-  const { coupon, discount } = await evaluateCoupon(req.body.code, req.body.subtotal);
+  const { coupon, discount } = await evaluateCoupon(req.body.code, req.body.subtotal, req.user?.id);
   res.json({ success: true, coupon: publicCoupon(coupon), discount, message: `${coupon.code} applied` });
 }
 

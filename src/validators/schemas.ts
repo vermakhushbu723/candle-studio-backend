@@ -108,6 +108,22 @@ export const broadcastSchema = z.object({
   channels: z.array(z.enum(['push', 'email'])).min(1),
 });
 
+export const followClaimSchema = z.object({
+  deviceId: z.string().trim().min(8).max(100),
+  fingerprint: z.string().trim().max(200).optional(),
+  visited: z.array(z.string().max(40)).max(20),
+});
+export const deviceStatusSchema = z.object({ deviceId: z.string().trim().min(8).max(100) });
+export const followOfferSchema = z.object({
+  enabled: z.boolean(),
+  percent: z.number().int().min(1).max(90),
+  validDays: z.number().int().min(1).max(365),
+  maxDiscount: z.number().int().min(0).max(100000),
+  links: z
+    .array(z.object({ key: z.string().trim().min(1).max(40), label: z.string().trim().min(1).max(40), url: z.string().trim().url() }))
+    .min(1)
+    .max(8),
+});
 export const shippingSettingsSchema = z.object({
   shippingFee: z.number().int().min(0).max(5000),
   freeShippingEnabled: z.boolean(),

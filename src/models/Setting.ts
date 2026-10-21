@@ -7,6 +7,12 @@ const settingSchema = new Schema(
     shippingFee: { type: Number, min: 0 },
     freeShippingEnabled: { type: Boolean },
     freeShippingAbove: { type: Number, min: 0 },
+    // key "followOffer": scan the footer QR → follow us → personal discount coupon
+    enabled: { type: Boolean },
+    percent: { type: Number, min: 1, max: 90 },
+    validDays: { type: Number, min: 1 },
+    maxDiscount: { type: Number, min: 0 },
+    links: [{ _id: false, key: String, label: String, url: String }],
   },
   { timestamps: true },
 );
@@ -36,4 +42,42 @@ export function shippingFor(amountAfterDiscount: number, s: ShippingSettings) {
   if (amountAfterDiscount === 0) return 0;
   if (s.freeShippingEnabled && amountAfterDiscount >= s.freeShippingAbove) return 0;
   return s.shippingFee;
+}
+
+// ——— Follow & Save offer (footer QR code)
+export interface FollowLink {
+  key: string;
+  label: string;
+  url: string;
+}
+export interface FollowOfferSettings {
+  enabled: boolean;
+  percent: number; // discount on the personal coupon
+  validDays: number; // coupon expiry after it is claimed
+  maxDiscount: number; // 0 = no cap
+  links: FollowLink[]; // pages the customer opens before claiming
+}
+
+export const DEFAULT_FOLLOW_OFFER: FollowOfferSettings = {
+  enabled: true,
+  percent: 10,
+  validDays: 30,
+  maxDiscount: 0,
+  links: [
+    { key: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/jyotessa/' },
+    { key: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/jyotessa/' },
+    { key: 'google', label: 'Google', url: 'https://g.page/r/CQ2T_G0wSr7nECE/review' },
+  ],
+};
+
+export async function getFollowOffer(): Promise<FollowOfferSettings> {
+  const doc = await Setting.findOne({ key: 'followOffer' }).lean();
+  const d = DEFAULT_FOLLOW_OFFER;
+  return {
+    enabled: doc?.enabled ?? d.enabled,
+    percent: doc?.percent ?? d.percent,
+    validDays: doc?.validDays ?? d.validDays,
+    maxDiscount: doc?.maxDiscount ?? d.maxDiscount,
+    links: doc?.links?.length ? doc.links.map((l) => ({ key: l.key ?? '', label: l.label ?? '', url: l.url ?? '' })) : d.links,
+  };
 }

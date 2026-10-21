@@ -6,6 +6,7 @@ import * as collections from '../controllers/collection.controller.js';
 import * as coupons from '../controllers/coupon.controller.js';
 import * as inbox from '../controllers/inbox.controller.js';
 import * as notifications from '../controllers/notification.controller.js';
+import * as offers from '../controllers/offer.controller.js';
 import * as orders from '../controllers/order.controller.js';
 import * as products from '../controllers/product.controller.js';
 import * as settings from '../controllers/settings.controller.js';
@@ -63,6 +64,11 @@ for (const [path, ctrl] of [['inquiries', inbox.inquiryAdmin], ['tickets', inbox
 // Store settings
 router.get('/settings/shipping', h(settings.getShipping));
 router.put('/settings/shipping', validate(s.shippingSettingsSchema), h(settings.updateShipping));
+
+// Follow & Save offer (footer QR code)
+router.get('/offers/follow', h(offers.getOfferAdmin));
+router.put('/offers/follow', validate(s.followOfferSchema), h(offers.updateOffer));
+router.get('/offers/follow/claims', h(offers.listClaims));
 
 // Notifications (broadcast to customers + history)
 router.get('/notifications', h(notifications.list));

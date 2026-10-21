@@ -60,7 +60,7 @@ export async function createOrder(req: Request, res: Response) {
   let discount = 0;
   let couponId: unknown;
   if (b.couponCode) {
-    const r = await evaluateCoupon(b.couponCode, subtotal);
+    const r = await evaluateCoupon(b.couponCode, subtotal, req.user?.id);
     discount = r.discount;
     couponId = r.coupon._id;
   }

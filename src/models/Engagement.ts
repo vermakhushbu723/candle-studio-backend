@@ -52,6 +52,29 @@ export const Coupon = model(
       usedCount: { type: Number, default: 0 },
       description: { type: String, default: '' },
       isActive: { type: Boolean, default: true },
+      // Personal coupons (e.g. Follow & Save) can only be used by this customer
+      owner: { type: Schema.Types.ObjectId, ref: 'User', index: true },
+      source: { type: String, default: 'admin' }, // admin | follow
+    },
+    { timestamps: true },
+  ),
+);
+
+/**
+ * One Follow & Save claim per customer AND per device. `deviceId` is a random ID the browser/app keeps;
+ * `fingerprint` (browser/phone traits) + IP catches a cleared browser on the same phone.
+ */
+export const FollowClaim = model(
+  'FollowClaim',
+  new Schema(
+    {
+      user: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+      deviceId: { type: String, required: true, unique: true },
+      fingerprint: { type: String, index: true },
+      ip: { type: String, index: true },
+      userAgent: String,
+      visited: [String],
+      couponCode: { type: String, required: true },
     },
     { timestamps: true },
   ),

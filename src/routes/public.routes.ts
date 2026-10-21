@@ -5,10 +5,11 @@ import * as collections from '../controllers/collection.controller.js';
 import * as coupons from '../controllers/coupon.controller.js';
 import * as inbox from '../controllers/inbox.controller.js';
 import * as notifications from '../controllers/notification.controller.js';
+import * as offers from '../controllers/offer.controller.js';
 import * as orders from '../controllers/order.controller.js';
 import * as products from '../controllers/product.controller.js';
 import * as settings from '../controllers/settings.controller.js';
-import { requireAuth } from '../middlewares/auth.js';
+import { optionalAuth, requireAuth } from '../middlewares/auth.js';
 import { validate } from '../middlewares/validate.js';
 import * as s from '../validators/schemas.js';
 import { asyncHandler as h } from '../utils/http.js';
@@ -36,7 +37,12 @@ router.get('/collections', h(collections.listPublic));
 router.get('/settings', h(settings.publicSettings));
 
 // ——— Checkout, coupon box, Track Order
-router.post('/coupons/validate', formLimiter, validate(s.couponCheckSchema), h(coupons.validateCoupon));
+router.post('/coupons/validate', formLimiter, optionalAuth, validate(s.couponCheckSchema), h(coupons.validateCoupon));
+
+// ——— Follow & Save (footer QR code → follow our pages → personal coupon)
+router.get('/offers/follow', optionalAuth, h(offers.getOffer));
+router.post('/offers/follow/device', formLimiter, validate(s.deviceStatusSchema), h(offers.deviceStatus));
+router.post('/offers/follow/claim', formLimiter, requireAuth, validate(s.followClaimSchema), h(offers.claimOffer));
 // Customers must be logged in to place an order (the checkout asks them to log in first)
 router.post('/orders', formLimiter, requireAuth, validate(s.createOrderSchema), h(orders.createOrder));
 router.post('/orders/:orderId/verify-payment', formLimiter, validate(s.verifyPaymentSchema), h(orders.verifyPayment));
