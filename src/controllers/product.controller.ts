@@ -28,6 +28,7 @@ export async function listAdmin(req: Request, res: Response) {
     filter.$or = [{ name: rx }, { slug: rx }, { tagline: rx }];
   }
   if (req.query.stock === 'low') filter.stock = { $lt: 10 };
+  if (req.query.active === 'true' || req.query.active === 'false') filter.isActive = req.query.active === 'true';
   const [items, total] = await Promise.all([
     Product.find(filter).sort({ sortOrder: 1, createdAt: 1 }).skip(skip).limit(limit),
     Product.countDocuments(filter),

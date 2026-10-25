@@ -1,7 +1,12 @@
 import { Schema, model } from 'mongoose';
 
 export const LINES = ['pearled', 'handcrafted'] as const;
-export const CATEGORIES = ['pearl-kits', 'refills', 'food-inspired', 'love-in-the-air', 'floral', 'luxury', 'wax-fresheners'] as const;
+export const CATEGORIES = [
+  // Current catalogue (Candledust pricing catalogue, Oct 2026)
+  'pooja-festive', 'food-inspired', 'bubble-candles', 'floral', 'floating-candles', 'jars-glass', 'tealights', 'cute-gifts',
+  // Earlier ranges (kept so older products can still be edited or re-activated)
+  'pearl-kits', 'refills', 'love-in-the-air', 'luxury', 'wax-fresheners',
+] as const;
 export const COLLECTIONS = [
   'cartoons-kids', 'ocean', 'aesthetic', 'diwali-special', 'christmas-special',
   'valentine-special', 'new-year-special', 'spiritual', 'winter',
