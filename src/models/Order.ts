@@ -13,6 +13,7 @@ const itemSchema = new Schema(
     price: { type: Number, required: true },
     quantity: { type: Number, required: true, min: 1 },
     fragrance: String,
+    color: String,
   },
   { _id: false },
 );

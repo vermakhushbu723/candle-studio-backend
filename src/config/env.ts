@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import path from 'node:path';
 
 const required = (key: string) => {
   const v = process.env[key];
@@ -25,6 +26,8 @@ export const env = {
   googleClientId: process.env.GOOGLE_CLIENT_ID ?? '',
   // Public site URL used in links inside notifications and emails
   siteUrl: process.env.SITE_URL ?? 'https://jyotessa.com',
+  // Product photos uploaded from the admin (served at /uploads)
+  uploadDir: path.resolve(process.env.UPLOAD_DIR ?? 'uploads'),
   // Google Business Profile "write a review" link — used in the Delivered email/push
   googleReviewUrl: process.env.GOOGLE_REVIEW_URL ?? 'https://g.page/r/CQ2T_G0wSr7nECE/review',
   // Firebase Cloud Messaging (push). Service-account JSON, base64-encoded. Push is disabled until set.

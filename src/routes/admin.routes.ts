@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import * as admin from '../controllers/admin.controller.js';
 import * as auth from '../controllers/auth.controller.js';
@@ -10,6 +10,7 @@ import * as offers from '../controllers/offer.controller.js';
 import * as orders from '../controllers/order.controller.js';
 import * as products from '../controllers/product.controller.js';
 import * as settings from '../controllers/settings.controller.js';
+import * as uploads from '../controllers/upload.controller.js';
 import { requireAdmin } from '../middlewares/auth.js';
 import { validate } from '../middlewares/validate.js';
 import * as s from '../validators/schemas.js';
@@ -40,6 +41,7 @@ router.get('/products/:id', h(products.getById));
 router.post('/products', validate(s.productSchema), h(products.create));
 router.put('/products/:id', validate(s.productSchema.partial()), h(products.update));
 router.delete('/products/:id', h(products.remove));
+router.post('/uploads', express.raw({ type: uploads.UPLOAD_TYPES, limit: '2mb' }), h(uploads.uploadImage));
 
 // Collections (Diwali, Valentine, Winter…)
 router.get('/collections', h(collections.listAdmin));

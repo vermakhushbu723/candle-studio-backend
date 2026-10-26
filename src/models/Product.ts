@@ -12,6 +12,16 @@ export const COLLECTIONS = [
   'valentine-special', 'new-year-special', 'spiritual', 'winter',
 ] as const;
 
+// A colour the customer can pick on the product page; its photos replace the gallery when selected
+const colorSchema = new Schema(
+  {
+    name: { type: String, required: true, trim: true },
+    hex: { type: String, default: '' },
+    images: { type: [String], default: [] },
+  },
+  { _id: false },
+);
+
 const productSchema = new Schema(
   {
     // The storefront keys carts, wishlists and URLs by this slug (exposed as `id`)
@@ -34,6 +44,10 @@ const productSchema = new Schema(
     howToUse: { type: [String], default: [] },
     fragrances: { type: Boolean, default: false },
     images: { type: [String], default: [] },
+    colors: { type: [colorSchema], default: [] },
+    // Products sharing a variantGroup are shown as size / pack options of each other (e.g. Single, Pack of 2)
+    variantGroup: { type: String, default: '', index: true },
+    variantLabel: { type: String, default: '' },
     visual: { type: Schema.Types.Mixed, default: {} },
     stock: { type: Number, default: 0, min: 0 },
     soldCount: { type: Number, default: 0 },

@@ -13,6 +13,15 @@ import { asyncHandler } from './utils/http.js';
 export function createApp() {
   const app = express();
   app.set('trust proxy', 1);
+  // Uploaded product photos are shown on the website and app (other origins), so allow cross-origin loading
+  app.use(
+    '/uploads',
+    (_req, res, next) => {
+      res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+      next();
+    },
+    express.static(env.uploadDir, { maxAge: '30d', immutable: true, fallthrough: false }),
+  );
   app.use(helmet());
   app.use(
     cors({

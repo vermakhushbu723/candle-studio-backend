@@ -40,6 +40,7 @@ export const createOrderSchema = z.object({
         productId: z.string().min(1),
         quantity: z.number().int().min(1).max(20),
         fragrance: z.string().nullish(),
+        color: z.string().nullish(),
       }),
     )
     .min(1),
@@ -162,6 +163,17 @@ export const productSchema = z.object({
   howToUse: z.array(z.string()).default([]),
   fragrances: z.boolean().default(false),
   images: z.array(z.string()).default([]),
+  colors: z
+    .array(
+      z.object({
+        name: z.string().trim().min(1),
+        hex: z.string().trim().regex(/^(#[0-9a-fA-F]{6})?$/, 'use a colour like #C0392B').default(''),
+        images: z.array(z.string()).default([]),
+      }),
+    )
+    .default([]),
+  variantGroup: z.string().trim().regex(/^[a-z0-9-]*$/, 'use lowercase letters, numbers and dashes').default(''),
+  variantLabel: z.string().trim().default(''),
   visual: z.record(z.unknown()).optional(),
   stock: z.number().int().nonnegative().default(0),
   isActive: z.boolean().default(true),
