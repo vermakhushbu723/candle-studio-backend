@@ -113,7 +113,9 @@ export const followClaimSchema = z.object({
   deviceId: z.string().trim().min(8).max(100),
   fingerprint: z.string().trim().max(200).optional(),
   visited: z.array(z.string().max(40)).max(20),
+  handle: z.string().trim().min(2, 'Enter your Instagram or Facebook username').max(60),
 });
+export const followReviewSchema = z.object({ action: z.enum(['approve', 'reject']) });
 export const deviceStatusSchema = z.object({ deviceId: z.string().trim().min(8).max(100) });
 export const followOfferSchema = z.object({
   enabled: z.boolean(),
@@ -129,6 +131,7 @@ export const shippingSettingsSchema = z.object({
   shippingFee: z.number().int().min(0).max(5000),
   freeShippingEnabled: z.boolean(),
   freeShippingAbove: z.number().int().min(0).max(1000000),
+  deliveryStates: z.array(z.string().trim().min(2)).max(40).optional(),
 });
 export const collectionSchema = z.object({
   ...notifyFlag,

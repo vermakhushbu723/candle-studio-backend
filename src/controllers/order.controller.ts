@@ -3,7 +3,7 @@ import { Coupon } from '../models/Engagement.js';
 import { Order } from '../models/Order.js';
 import { Product } from '../models/Product.js';
 import { User } from '../models/User.js';
-import { getShippingSettings, shippingFor } from '../models/Setting.js';
+import { getShippingSettings, shippingFor, deliveryError } from '../models/Setting.js';
 import { notifyOrder, type OrderEvent } from '../services/notify.js';
 import { ApiError, escapeRegex, paginate } from '../utils/http.js';
 import { evaluateCoupon } from './coupon.controller.js';
@@ -69,7 +69,10 @@ export async function createOrder(req: Request, res: Response) {
   }
   const after = subtotal - discount;
   // Shipping charges are set by the admin (Settings → Shipping charges)
-  const shipping = shippingFor(after, await getShippingSettings());
+  const shippingSettings = await getShippingSettings();
+  const notDeliverable = deliveryError(b.state, b.pincode, shippingSettings);
+  if (notDeliverable) throw new ApiError(400, notDeliverable);
+  const shipping = shippingFor(after, shippingSettings);
 
   const online = b.payment !== 'cod';
   const rzp = razorpay();

@@ -74,6 +74,11 @@ export const FollowClaim = model(
       ip: { type: String, index: true },
       userAgent: String,
       visited: [String],
+      // Instagram / Facebook username the customer followed us from — checked by the team before the coupon works
+      handle: { type: String, default: '' },
+      // Claims made before verification existed have no status and count as approved
+      status: { type: String, enum: ['pending', 'approved'], default: 'pending', index: true },
+      reviewedAt: Date,
       couponCode: { type: String, required: true },
     },
     { timestamps: true },

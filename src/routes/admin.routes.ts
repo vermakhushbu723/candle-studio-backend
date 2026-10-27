@@ -71,6 +71,7 @@ router.put('/settings/shipping', validate(s.shippingSettingsSchema), h(settings.
 router.get('/offers/follow', h(offers.getOfferAdmin));
 router.put('/offers/follow', validate(s.followOfferSchema), h(offers.updateOffer));
 router.get('/offers/follow/claims', h(offers.listClaims));
+router.patch('/offers/follow/claims/:id', validate(s.followReviewSchema), h(offers.reviewClaim));
 
 // Notifications (broadcast to customers + history)
 router.get('/notifications', h(notifications.list));
