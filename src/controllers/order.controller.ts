@@ -49,14 +49,18 @@ export async function createOrder(req: Request, res: Response) {
   const products = await Product.find({ slug: { $in: b.items.map((i: { productId: string }) => i.productId) }, isActive: true });
   const bySlug = new Map(products.map((p) => [p.slug, p]));
 
-  const items = b.items.map((i: { productId: string; quantity: number; fragrance?: string | null; color?: string | null }) => {
+  type CartItem = { productId: string; quantity: number; fragrance?: string | null; color?: string | null; pack?: string | null };
+  const items = b.items.map((i: CartItem) => {
     const p = bySlug.get(i.productId);
     if (!p) throw new ApiError(400, 'An item in your cart is no longer available. Please remove it and try again.');
     if (p.stock < i.quantity) throw new ApiError(400, `Only ${p.stock} of “${p.name}” left in stock.`);
-    // Products with colours need one of them; the order shows that colour's photo
+    // Each variation must be one the product offers (defaulting to the first); the price comes from the pack
+    const pack = p.packs.length ? p.packs.find((x) => x.label === i.pack) : undefined;
+    if (p.packs.length && !pack) throw new ApiError(400, `Please choose a pack size for “${p.name}”.`);
     const color = p.colors.length ? (p.colors.find((c) => c.name === i.color) ?? p.colors[0]) : undefined;
-    const image = color?.images[0] ?? p.images[0];
-    return { productId: p.slug, name: p.name, image, price: p.price, quantity: i.quantity, fragrance: i.fragrance ?? undefined, color: color?.name };
+    const fragrance = p.fragranceOptions.length ? (p.fragranceOptions.find((f) => f === i.fragrance) ?? p.fragranceOptions[0]) : (i.fragrance ?? undefined);
+    const image = color?.images[0] ?? pack?.images[0] ?? p.images[0];
+    return { productId: p.slug, name: p.name, image, price: pack?.price ?? p.price, quantity: i.quantity, pack: pack?.label, color: color?.name, fragrance };
   });
 
   const subtotal = items.reduce((s: number, i: { price: number; quantity: number }) => s + i.price * i.quantity, 0);

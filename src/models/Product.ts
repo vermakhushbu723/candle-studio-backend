@@ -22,6 +22,17 @@ const colorSchema = new Schema(
   { _id: false },
 );
 
+// A pack / quantity option of the same product (Single, Pack of 2…) with its own price and photos
+const packSchema = new Schema(
+  {
+    label: { type: String, required: true, trim: true },
+    price: { type: Number, required: true, min: 0 },
+    compareAt: { type: Number, min: 0 },
+    images: { type: [String], default: [] },
+  },
+  { _id: false },
+);
+
 const productSchema = new Schema(
   {
     // The storefront keys carts, wishlists and URLs by this slug (exposed as `id`)
@@ -44,10 +55,14 @@ const productSchema = new Schema(
     howToUse: { type: [String], default: [] },
     fragrances: { type: Boolean, default: false },
     images: { type: [String], default: [] },
+    // Variations the customer picks on the product page — all inside this one product
+    packs: { type: [packSchema], default: [] }, // first pack = default; `price` mirrors it
     colors: { type: [colorSchema], default: [] },
-    // Products sharing a variantGroup are shown as size / pack options of each other (e.g. Single, Pack of 2)
+    fragranceOptions: { type: [String], default: [] },
+    // Legacy: pack sizes used to be separate products linked by a group; merged ones point at the product that holds them now
     variantGroup: { type: String, default: '', index: true },
     variantLabel: { type: String, default: '' },
+    mergedInto: { type: String, default: '' },
     visual: { type: Schema.Types.Mixed, default: {} },
     stock: { type: Number, default: 0, min: 0 },
     soldCount: { type: Number, default: 0 },

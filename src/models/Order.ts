@@ -14,6 +14,7 @@ const itemSchema = new Schema(
     quantity: { type: Number, required: true, min: 1 },
     fragrance: String,
     color: String,
+    pack: String, // e.g. "Pack of 2"
   },
   { _id: false },
 );

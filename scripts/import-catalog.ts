@@ -40,7 +40,10 @@ console.log(`${products.length} catalogue products: ${products.length - existing
 console.log(`${toHide.length} other products will be hidden:`, toHide.map((p) => p.slug).join(', ') || '—');
 
 if (APPLY) {
+  // Pack sizes merged into another product (scripts/merge-pack-variants.ts) stay hidden
+  const merged = new Set((await Product.find({ mergedInto: { $nin: ['', null] } }).select('slug')).map((p) => p.slug));
   for (const p of products) {
+    if (merged.has(p.slug as string)) continue;
     await Product.updateOne(
       { slug: p.slug },
       { $set: { ...p, isActive: true }, $setOnInsert: { stock: STOCK, soldCount: 0 } },
